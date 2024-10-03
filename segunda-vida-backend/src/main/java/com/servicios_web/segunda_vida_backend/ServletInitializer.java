@@ -1,4 +1,4 @@
-package com.servicios_web.segunda_vida_backend.Service;
+package com.servicios_web.segunda_vida_backend;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
