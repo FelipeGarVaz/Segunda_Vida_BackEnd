@@ -22,10 +22,10 @@ public class UserService {
         userRepo.save(user);
     }
 
-    public User getByID_Usuario(Integer id_usuario){
-        return userRepo.findById(id_usuario).get();
+    public User getByID_User(Integer id_user){
+        return userRepo.findById(id_user).get();
     }
-    public void delete(Integer id_usuario){
-        userRepo.deleteById(id_usuario);
+    public void delete(Integer id_user){
+        userRepo.deleteById(id_user);
     }
 }
