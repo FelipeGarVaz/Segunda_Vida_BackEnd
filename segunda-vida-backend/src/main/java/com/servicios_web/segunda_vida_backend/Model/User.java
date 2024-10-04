@@ -1,11 +1,7 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
 @Entity
@@ -14,71 +10,66 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_usuario;
-    private String nombre_completo;
-    private String nombre_usuario;
-    private String contrasena;
-    private String telefono;
-    private String correo_electronico;
 
-    public int getId_usuario() {
-        return id_usuario;
+    @Column(name = "id_usuario")
+    private int id_user;
+    @Column(name = "nombre_completo")
+    private String name;
+    @Column(name = "nombre_usuario")
+    private String userName;
+    @Column(name = "contrasena")
+    private String password;
+    @Column(name = "telefono")
+    private String phone;
+    @Column(name = "correo_electronico")
+    private String email;
+
+    public int getId_user() {
+        return id_user;
     }
 
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 
-    public String getNombre_completo() {
-        return nombre_completo;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre_completo(String nombre_completo) {
-        this.nombre_completo = nombre_completo;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNombre_usuario() {
-        return nombre_usuario;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setNombre_usuario(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getCorreo_electronico() {
-        return correo_electronico;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo_electronico(String correo_electronico) {
-        this.correo_electronico = correo_electronico;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id_usuario=" + id_usuario +
-                ", nombre_completo='" + nombre_completo + '\'' +
-                ", nombre_usuario='" + nombre_usuario + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", correo_electronico='" + correo_electronico + '\'' +
-                '}';
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 

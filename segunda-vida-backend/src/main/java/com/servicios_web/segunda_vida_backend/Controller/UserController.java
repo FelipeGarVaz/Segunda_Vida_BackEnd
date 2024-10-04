@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("users")
 @CrossOrigin(originPatterns = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 
 public class UserController {
@@ -22,9 +22,9 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("{id_usuario}")
-    public ResponseEntity<User> getByID_Usuario(@PathVariable Integer id_usuario) {
-        User user = userService.getByID_Usuario(id_usuario);
+    @GetMapping("{id_user}")
+    public ResponseEntity<User> getByID_Usuario(@PathVariable Integer id_user) {
+        User user = userService.getByID_User(id_user);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
@@ -33,11 +33,11 @@ public class UserController {
         userService.save(user);
     }
 
-    @PutMapping("{id_usuario}")
-    public ResponseEntity<?> update(@RequestBody User user, @PathVariable Integer id_usuario) {
+    @PutMapping("{id_user}")
+    public ResponseEntity<?> update(@RequestBody User user, @PathVariable Integer id_user) {
         try {
-            User auxUser = userService.getByID_Usuario(id_usuario);
-            user.setId_usuario(auxUser.getId_usuario());
+            User auxUser = userService.getByID_User(id_user);
+            user.setId_user(auxUser.getId_user());
             userService.save(user);
             return new ResponseEntity<String>("Updated record", HttpStatus.OK);
         }catch (NoSuchElementException e) {
@@ -45,8 +45,8 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("{id_usuario}")
-    public void delete(@PathVariable Integer id_usuario) {
-        userService.delete(id_usuario);
+    @DeleteMapping("{id_user}")
+    public void delete(@PathVariable Integer id_user) {
+        userService.delete(id_user);
     }
 }
