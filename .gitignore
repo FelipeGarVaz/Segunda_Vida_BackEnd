@@ -34,5 +34,4 @@ spring.log
 *.ipr
 *.iws
 .DS_Store
-/segunda-vida-backend/src/main/resources
-
+segunda-vida-backend/src/main/resources/application.properties
