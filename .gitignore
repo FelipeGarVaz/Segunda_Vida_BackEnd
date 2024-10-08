@@ -34,3 +34,5 @@ spring.log
 *.ipr
 *.iws
 .DS_Store
+/segunda-vida-backend/src/main/resources
+
