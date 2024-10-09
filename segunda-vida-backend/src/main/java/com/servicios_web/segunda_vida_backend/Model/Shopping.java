@@ -7,6 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
+
+import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 @Table(name = "compras")
 public class Shopping {
@@ -14,17 +23,23 @@ public class Shopping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @NotNull
     @Column(name = "id_compra")
     private int id_shopping;
 
+    @NotNull
     @Column(name = "id_comprador")
     private int id_buyer;
 
+    @NotNull
     @Column(name = "id_producto")
     private int id_product;
 
-    @Column(name = "fecha_compra")
-    private String date_of_purchase;
+    @NotNull
+    @CreationTimestamp
+    @Column(name = "fecha_compra", nullable = false, updatable = false)
+    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime date_of_purchase;
 
       //GET AND SET
     public int getId_shopping() {
@@ -51,11 +66,11 @@ public class Shopping {
         this.id_product = id_product;
     }
 
-    public String get_Date_of_purchase() {
+    public LocalDateTime get_Date_of_purchase() {
         return date_of_purchase;
     }
 
-    public void set__Date_of_purchase(String date_of_purchase) {
+    public void set__Date_of_purchase(LocalDateTime date_of_purchase) {
         this.date_of_purchase = date_of_purchase;
     }
 }
