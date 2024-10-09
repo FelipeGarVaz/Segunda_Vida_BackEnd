@@ -7,6 +7,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
+
+import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 @Entity
 @Table(name = "resenas")
 public class Review {
@@ -14,20 +24,28 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @NotNull
     @Column(name = "id_resena")
     private int id_review;
 
+    @NotNull
     @Column(name = "id_compra")
     private int id_shopping;
 
+    @NotBlank(message = "Date of purchase cannot be blank")    
+    @Size(min = 1, message = "The comment must have at least 1 character")
     @Column(name = "comentario")
     private String commentary;
 
+    @Min(value = 1, message = "The score must be at least 1")
+    @Max(value = 5, message = "The score cannot exceed 5")
     @Column(name = "puntuacion")
     private int score;
 
-    @Column(name = "fecha_resena")
-    private String review_date;
+    @NotNull
+    @CreationTimestamp
+    @Column(name = "fecha_resena", nullable = false, updatable = false)
+    private LocalDateTime review_date;
 
     //GET AND SET
     public int getId_review() {
@@ -62,11 +80,11 @@ public class Review {
         this.score = score;
     }
 
-    public String getReview_date() {
+    public LocalDateTime getReview_date() {
         return review_date;
     }
 
-    public void setReview_date(String review_date) {
+    public void setReview_date(LocalDateTime review_date) {
         this.review_date = review_date;
     }
 }
