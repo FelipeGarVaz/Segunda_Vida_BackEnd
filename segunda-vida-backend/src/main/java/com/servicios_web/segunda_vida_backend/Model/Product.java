@@ -1,13 +1,11 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.util.concurrent.locks.Condition;
+import java.util.List;
 
 @Entity
 @Table(name = "productos")
@@ -15,7 +13,6 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id_producto")
     private int id_product;
 
@@ -36,6 +33,12 @@ public class Product {
     @JsonProperty("precio")
     private double price;
 
+    // Relación Many-to-One con Categoría
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", nullable = false, insertable = false, updatable = false)
+    @JsonProperty("categoria")
+    private Category categoria;
+
     @NotNull
     @Column(name = "id_categoria")
     @JsonProperty("id_categoria")
@@ -52,6 +55,11 @@ public class Product {
     @Column(name = "condicion")
     @JsonProperty("condicion")
     private Condition condition;
+
+    // Relación One-to-Many con ProductImage
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    private List<ProductImage> imagenes;
+
 
     // Enum para la columna condicion
     public enum Condition {
@@ -116,4 +124,12 @@ public class Product {
     public void setCondition(Condition condition) {
         this.condition = condition;
     }
+
+    /*public List<ProductImage> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<ProductImage> imagenes) {
+        this.imagenes = imagenes;
+    }*/
 }
