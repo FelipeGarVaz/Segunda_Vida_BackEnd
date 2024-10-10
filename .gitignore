@@ -35,3 +35,4 @@ spring.log
 *.iws
 .DS_Store
 segunda-vida-backend/src/main/resources/application.properties
+segunda-vida-backend/src/main/resources/application.properties

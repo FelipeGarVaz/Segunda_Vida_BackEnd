@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Entity
 @Table(name="categorias")
 public class Category {
@@ -18,6 +20,10 @@ public class Category {
     @Size(min = 1, max = 100, message = "The category name must be between 1 and 100 characters")
     @Column(name = "nombre_categoria")
     private String name;
+
+    //Relación One-to-Many con Producto
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<Product> productos;
 
     //GET AND SET
     public int getId_category() {
@@ -35,4 +41,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
 }
