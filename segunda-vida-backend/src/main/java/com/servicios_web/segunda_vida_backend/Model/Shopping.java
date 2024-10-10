@@ -1,20 +1,17 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
 
-import org.antlr.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "compras")
@@ -23,22 +20,23 @@ public class Shopping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @NotNull
     @Column(name = "id_compra")
+    @JsonProperty("id_compra")
     private int id_shopping;
 
     @NotNull
     @Column(name = "id_comprador")
+    @JsonProperty("id_comprador")
     private int id_buyer;
 
     @NotNull
     @Column(name = "id_producto")
+    @JsonProperty("id_producto")
     private int id_product;
 
-    @NotNull
     @CreationTimestamp
     @Column(name = "fecha_compra", nullable = false, updatable = false)
-    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonProperty("fecha_compra")
     private LocalDateTime date_of_purchase;
 
       //GET AND SET
