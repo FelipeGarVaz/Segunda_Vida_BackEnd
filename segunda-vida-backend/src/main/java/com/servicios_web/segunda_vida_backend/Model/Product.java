@@ -1,11 +1,13 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.util.List;
+
+import java.util.concurrent.locks.Condition;
 
 @Entity
 @Table(name = "productos")
@@ -13,10 +15,11 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "id_producto")
     private int id_product;
 
-    @NotNull
+    @NotNull(message = "User ID cannot be null")
     @Column(name = "id_usuario")
     @JsonProperty("id_vendedor")
     private int id_user;
@@ -28,23 +31,17 @@ public class Product {
     private String name;
 
     @NotBlank(message = "Price cannot be null or empty and must contain at least one non-whitespace character.")
-    @NotNull
     @Column(name = "precio")
     @JsonProperty("precio")
     private double price;
 
-    // Relación Many-to-One con Categoría
-    @ManyToOne
-    @JoinColumn(name = "id_categoria", nullable = false, insertable = false, updatable = false)
-    @JsonProperty("categoria")
-    private Category categoria;
-
-    @NotNull
+    @NotNull(message = "Category ID cannot be null")
     @Column(name = "id_categoria")
     @JsonProperty("id_categoria")
     private int id_categorie;
 
     @NotBlank(message = "Description cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 1, max = 500, message = "Description must be between 1 and 500 characters.")
     @Column(name = "descripcion")
     @JsonProperty("descripcion")
     private String description;
@@ -55,11 +52,6 @@ public class Product {
     @Column(name = "condicion")
     @JsonProperty("condicion")
     private Condition condition;
-
-    // Relación One-to-Many con ProductImage
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<ProductImage> imagenes;
-
 
     // Enum para la columna condicion
     public enum Condition {
@@ -124,12 +116,4 @@ public class Product {
     public void setCondition(Condition condition) {
         this.condition = condition;
     }
-
-    /*public List<ProductImage> getImagenes() {
-        return imagenes;
-    }
-
-    public void setImagenes(List<ProductImage> imagenes) {
-        this.imagenes = imagenes;
-    }*/
 }
