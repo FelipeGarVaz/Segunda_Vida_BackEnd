@@ -40,6 +40,10 @@ public class Product {
     @JsonProperty("id_categoria")
     private int id_categorie;
 
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
+    private Category categoria;
+
     @NotBlank(message = "Description cannot be null or empty and must contain at least one non-whitespace character.")
     @Size(min = 1, max = 500, message = "Description must be between 1 and 500 characters.")
     @Column(name = "descripcion")
