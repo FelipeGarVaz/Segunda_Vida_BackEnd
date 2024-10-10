@@ -19,7 +19,7 @@ public class Product {
     @Column(name = "id_producto")
     private int id_product;
 
-    @NotNull
+    @NotNull(message = "User ID cannot be null")
     @Column(name = "id_usuario")
     @JsonProperty("id_vendedor")
     private int id_user;
@@ -31,17 +31,17 @@ public class Product {
     private String name;
 
     @NotBlank(message = "Price cannot be null or empty and must contain at least one non-whitespace character.")
-    @NotNull
     @Column(name = "precio")
     @JsonProperty("precio")
     private double price;
 
-    @NotNull
+    @NotNull(message = "Category ID cannot be null")
     @Column(name = "id_categoria")
     @JsonProperty("id_categoria")
     private int id_categorie;
 
     @NotBlank(message = "Description cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 1, max = 500, message = "Description must be between 1 and 500 characters.")
     @Column(name = "descripcion")
     @JsonProperty("descripcion")
     private String description;

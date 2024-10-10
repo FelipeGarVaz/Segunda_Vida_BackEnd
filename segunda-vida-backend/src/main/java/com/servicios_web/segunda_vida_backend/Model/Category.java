@@ -1,6 +1,8 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="categorias")
@@ -12,6 +14,8 @@ public class Category {
     @Column(name = "id_categoria")
     private int id_category;
 
+    @NotBlank(message = "The category name cannot be blank")
+    @Size(min = 1, max = 100, message = "The category name must be between 1 and 100 characters")
     @Column(name = "nombre_categoria")
     private String name;
 
