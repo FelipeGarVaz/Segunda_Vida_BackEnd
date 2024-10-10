@@ -2,6 +2,13 @@ package com.servicios_web.segunda_vida_backend.Controller;
 
 import com.servicios_web.segunda_vida_backend.Model.Shopping;
 import com.servicios_web.segunda_vida_backend.Service.ShoppingService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,25 +29,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 @RequestMapping("shopping")
-@CrossOrigin(origins = "http://localhost:3000", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
+@Tag(name = "Shopping", description = "methods and documentation of purchases")
 public class ShoppingController {
 
     @Autowired
     private ShoppingService shoppingService;
     
-    //Endpoint que maneja solicitudes HHTP GET y devuelve una lista de productos
+    //Endpoint que maneja solicitudes HHTP GET y devuelve una lista de compras
+    @Operation(summary = "Get all shoppings")
+    @ApiResponse(responseCode = "200", description = "Found shoppings", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Shopping.class))) })
     @GetMapping
     public List<Shopping> getAll() {
         return shoppingService.getAll();
     }
 
     //Crear compra
+    @Operation(summary = "Register a shopping")
+    @ApiResponse(responseCode = "201", description = "Register a review", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Shopping.class))) })
     @PostMapping
     public void createShopping (@RequestBody Shopping shopping) {
         shoppingService.save(shopping);
     }
 
     //Buscar pod ID
+    @Operation(summary = "Get a fabric type by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Shopping  found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Shopping.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid shopping  id supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Shopping not found", content = @Content) })
     @GetMapping("{id_shopping}")
     public ResponseEntity<Shopping> getByID_Shopping(@PathVariable Integer id_shopping) {
         Shopping shopping = shoppingService.getByID_Shopping(id_shopping);
@@ -48,6 +68,9 @@ public class ShoppingController {
     }
 
     //Actualizar ventas
+    @Operation(summary = "Update a shopping")
+    @ApiResponse(responseCode = "200", description = "Updated shopping", content = {
+            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Shopping.class))) })
     @PutMapping("{id_shopping}")
     public ResponseEntity<?> update(@RequestBody Shopping shopping, @PathVariable Integer id_shopping) {
         try {

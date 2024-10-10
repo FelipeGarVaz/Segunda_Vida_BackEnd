@@ -13,7 +13,14 @@ import java.util.NoSuchElementException;
 public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<?> handleNotFoundException(NoSuchElementException e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El campo usuario no se encuentra registrado");
+    public ResponseEntity<?> handleException(NoSuchElementException e) {
+        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested item is not registered");
+        return new ResponseEntity<>("The requested item is not registered", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleException(IllegalArgumentException e) {
+        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested item is not registered");
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
