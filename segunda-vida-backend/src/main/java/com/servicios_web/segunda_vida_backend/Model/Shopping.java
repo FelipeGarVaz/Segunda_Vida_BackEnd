@@ -24,16 +24,17 @@ public class Shopping {
     @JsonProperty("id_compra")
     private int id_shopping;
 
-    @NotNull
+    @NotNull(message = "Buyer ID cannot be null")
     @Column(name = "id_comprador")
     @JsonProperty("id_comprador")
     private int id_buyer;
 
-    @NotNull
+    @NotNull(message = "Product ID cannot be null")
     @Column(name = "id_producto")
     @JsonProperty("id_producto")
     private int id_product;
 
+    @NotNull
     @CreationTimestamp
     @Column(name = "fecha_compra", nullable = false, updatable = false)
     @JsonProperty("fecha_compra")
