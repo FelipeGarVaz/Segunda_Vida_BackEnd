@@ -20,7 +20,7 @@ import com.servicios_web.segunda_vida_backend.Service.ProductService;
 
 @RestController
 @RequestMapping("product")
-@CrossOrigin(originPatterns = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
+@CrossOrigin(origins = "http://localhost:3000", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 
 public class ProductController {
     @Autowired
