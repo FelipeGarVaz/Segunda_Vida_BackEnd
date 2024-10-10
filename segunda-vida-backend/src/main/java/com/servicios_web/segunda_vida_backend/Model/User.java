@@ -1,7 +1,10 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -13,15 +16,35 @@ public class User {
 
     @Column(name = "id_usuario")
     private int id_user;
+
+    @NotBlank(message = "Name cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 1, max = 255, message = "Name must be between 1 and 255 characters.")
     @Column(name = "nombre_completo")
+    @JsonProperty("nombre_completo")
     private String name;
+
+    @NotBlank(message = "Username cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 8, max = 50, message = "Username must be between 8 and 50 characters.")
     @Column(name = "nombre_usuario")
+    @JsonProperty("nombre_usuario")
     private String userName;
+
+    @NotBlank(message = "Password cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 8, max = 255, message = "Password must be between 8 and 255 characters.")
     @Column(name = "contrasena")
+    @JsonProperty("contrasena")
     private String password;
+
+    @NotBlank(message = "Phone number cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 10, max = 20, message = "Phone number must be between 10 and 20 characters.")
     @Column(name = "telefono")
+    @JsonProperty("telefono")
     private String phone;
+
+    @NotBlank(message = "Email cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 10, max = 100, message = "Email must be between 10 and 100 characters.")
     @Column(name = "correo_electronico")
+    @JsonProperty("correo_electronico")
     private String email;
 
     public int getId_user() {
