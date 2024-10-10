@@ -1,7 +1,11 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.concurrent.locks.Condition;
 
@@ -15,23 +19,38 @@ public class Product {
     @Column(name = "id_producto")
     private int id_product;
 
+    @NotNull
     @Column(name = "id_usuario")
+    @JsonProperty("id_vendedor")
     private int id_user;
 
+    @NotBlank(message = "Name cannot be null or empty and must contain at least one non-whitespace character.")
+    @Size(min = 1, max = 255, message = "Name must be between 1 and 255 characters.")
     @Column(name = "nombre_articulo")
+    @JsonProperty("nombre_articulo")
     private String name;
 
+    @NotBlank(message = "Price cannot be null or empty and must contain at least one non-whitespace character.")
+    @NotNull
     @Column(name = "precio")
+    @JsonProperty("precio")
     private double price;
 
+    @NotNull
     @Column(name = "id_categoria")
+    @JsonProperty("id_categoria")
     private int id_categorie;
 
+    @NotBlank(message = "Description cannot be null or empty and must contain at least one non-whitespace character.")
     @Column(name = "descripcion")
+    @JsonProperty("descripcion")
     private String description;
 
+    @NotBlank(message = "Condition cannot be null or empty and must contain at least one non-whitespace character.")
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "condicion")
+    @JsonProperty("condicion")
     private Condition condition;
 
     // Enum para la columna condicion

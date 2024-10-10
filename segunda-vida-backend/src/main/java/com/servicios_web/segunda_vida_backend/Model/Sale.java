@@ -1,8 +1,8 @@
 package com.servicios_web.segunda_vida_backend.Model;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,13 +13,19 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id_venta")
+    @JsonProperty("id_venta")
     private int id_sale;
+    @NotNull
     @Column(name = "id_vendedor")
+    @JsonProperty("id_vendedor")
     private int id_seller;
+    @NotNull
     @Column(name = "id_producto")
+    @JsonProperty("id_producto")
     private int id_product;
     @CreationTimestamp
     @Column(name = "fecha_venta", nullable = false, updatable = false)
+    @JsonProperty("fecha_venta")
     private LocalDateTime sale_date;
 
     public int getId_sale() {
