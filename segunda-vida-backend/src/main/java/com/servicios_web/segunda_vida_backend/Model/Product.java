@@ -1,8 +1,16 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,12 +25,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id_producto")
-    private int id_product;
+    private int idProduct;
 
     @NotNull(message = "User ID cannot be null")
     @Column(name = "id_usuario")
     @JsonProperty("id_vendedor")
-    private int id_user;
+    private int idUser;
 
     @NotBlank(message = "Name cannot be null or empty and must contain at least one non-whitespace character.")
     @Size(min = 1, max = 255, message = "Name must be between 1 and 255 characters.")
@@ -38,7 +46,7 @@ public class Product {
     @NotNull(message = "Category ID cannot be null")
     @Column(name = "id_categoria")
     @JsonProperty("id_categoria")
-    private int id_categorie;
+    private int idCategorie;
 
     @ManyToOne
     @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
@@ -66,19 +74,19 @@ public class Product {
 
     //GET AND SET
     public int getId_product() {
-        return id_product;
+        return idProduct;
     }
 
     public void setId_product(int id_product) {
-        this.id_product = id_product;
+        this.idProduct = id_product;
     }
 
     public int getId_user() {
-        return id_user;
+        return idUser;
     }
 
     public void setId_user(int id_user) {
-        this.id_user = id_user;
+        this.idUser = id_user;
     }
 
     public String getName() {
@@ -98,11 +106,11 @@ public class Product {
     }
 
     public int getId_categorie() {
-        return id_categorie;
+        return idCategorie;
     }
 
     public void setId_categorie(int id_categorie) {
-        this.id_categorie = id_categorie;
+        this.idCategorie = id_categorie;
     }
 
     public String getDescription() {

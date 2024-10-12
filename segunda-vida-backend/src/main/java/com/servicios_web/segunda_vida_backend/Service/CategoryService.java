@@ -25,12 +25,12 @@ public class CategoryService {
     }
 
     //Obtener una categoria por su id
-    public Category getByID_Category(Integer id_category) {
-        return categoryRepo.findById(id_category).get();
+    public Category getByID_Category(Integer idCategory) {
+        return categoryRepo.findById(idCategory).get();
     }
 
     //Eliminar una categoria por su id
-    public void delete(Integer id_category) {
-        categoryRepo.deleteById(id_category);
+    public void delete(Integer idCategory) {
+        categoryRepo.deleteById(idCategory);
     }
 }

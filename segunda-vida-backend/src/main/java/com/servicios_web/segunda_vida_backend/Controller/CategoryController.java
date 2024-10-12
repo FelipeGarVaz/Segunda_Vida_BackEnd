@@ -12,8 +12,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -51,10 +59,10 @@ public class CategoryController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid category id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Category not found", content = @Content) })
-    @GetMapping("{id_category}")
-    public ResponseEntity<Category> getByID_Category(@PathVariable Integer id_category) {
+    @GetMapping("{idCategory}")
+    public ResponseEntity<Category> getByID_Category(@PathVariable Integer idCategory) {
         try {
-            Category category = categoryService.getByID_Category(id_category);
+            Category category = categoryService.getByID_Category(idCategory);
             return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -65,10 +73,10 @@ public class CategoryController {
     @Operation(summary = "Update a category")
     @ApiResponse(responseCode = "200", description = "Category updated", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)) })
-    @PutMapping("{id_category}")
-    public ResponseEntity<String> update(@RequestBody Category category, @PathVariable Integer id_category) {
+    @PutMapping("{idCategory}")
+    public ResponseEntity<String> update(@RequestBody Category category, @PathVariable Integer idCategory) {
         try {
-            Category auxCategory = categoryService.getByID_Category(id_category);
+            Category auxCategory = categoryService.getByID_Category(idCategory);
             category.setId_category(auxCategory.getId_category());
             categoryService.save(category);
             return new ResponseEntity<>("Updated record", HttpStatus.OK);
@@ -80,10 +88,10 @@ public class CategoryController {
     // Eliminar categoría
     @Operation(summary = "Delete a category")
     @ApiResponse(responseCode = "204", description = "Category deleted")
-    @DeleteMapping("{id_category}")
-    public ResponseEntity<String> delete(@PathVariable Integer id_category) {
+    @DeleteMapping("{idCategory}")
+    public ResponseEntity<String> delete(@PathVariable Integer idCategory) {
         try {
-            categoryService.delete(id_category);
+            categoryService.delete(idCategory);
             return new ResponseEntity<>("Record deleted", HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
