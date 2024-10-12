@@ -14,53 +14,65 @@ public class Sale {
 
     @Column(name = "id_venta")
     @JsonProperty("id_venta")
-    private int id_sale;
+    private int idSale;
 
     @NotNull(message = "Seller ID cannot be null")
     @Column(name = "id_vendedor")
     @JsonProperty("id_vendedor")
-    private int id_seller;
+    private int idSeller;
 
     @NotNull(message = "Product ID cannot be null")
     @Column(name = "id_producto")
     @JsonProperty("id_producto")
-    private int id_product;
+    private int idProduct;
 
     @NotNull
     @CreationTimestamp
     @Column(name = "fecha_venta", nullable = false, updatable = false)
     @JsonProperty("fecha_venta")
-    private LocalDateTime sale_date;
+    private LocalDateTime saleDate;
 
-    public int getId_sale() {
-        return id_sale;
+    public int getIdSale() {
+        return idSale;
     }
 
-    public void setId_sale(int id_sale) {
-        this.id_sale = id_sale;
+    public void setIdSale(int idSale) {
+        this.idSale = idSale;
     }
 
-    public int getId_seller() {
-        return id_seller;
+    @NotNull(message = "Seller ID cannot be null")
+    public int getIdSeller() {
+        return idSeller;
     }
 
-    public void setId_seller(int id_seller) {
-        this.id_seller = id_seller;
+    public void setIdSeller(@NotNull(message = "Seller ID cannot be null") int idSeller) {
+        this.idSeller = idSeller;
     }
 
-    public int getId_product() {
-        return id_product;
+    @NotNull(message = "Product ID cannot be null")
+    public int getIdProduct() {
+        return idProduct;
     }
 
-    public void setId_product(int id_product) {
-        this.id_product = id_product;
+    public void setIdProduct(@NotNull(message = "Product ID cannot be null") int idProduct) {
+        this.idProduct = idProduct;
     }
 
-    public LocalDateTime getSale_date() {
-        return sale_date;
+    public @NotNull LocalDateTime getSaleDate() {
+        return saleDate;
     }
 
-    public void setSale_date(LocalDateTime sale_date) {
-        this.sale_date = sale_date;
+    public void setSaleDate(@NotNull LocalDateTime saleDate) {
+        this.saleDate = saleDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Sale{" +
+                "idSale=" + idSale +
+                ", idSeller=" + idSeller +
+                ", idProduct=" + idProduct +
+                ", saleDate=" + saleDate +
+                '}';
     }
 }

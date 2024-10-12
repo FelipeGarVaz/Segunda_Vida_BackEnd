@@ -32,10 +32,10 @@ public class UserService {
         userRepo.save(user);
     }
 
-    public User getByID_User(Integer id_user){
-        return userRepo.findById(id_user).get();
+    public User getByID_User(Integer idUser){
+        return userRepo.findById(idUser).get();
     }
-    public void delete(Integer id_user){
-        userRepo.deleteById(id_user);
+    public void delete(Integer idUser){
+        userRepo.deleteById(idUser);
     }
 }

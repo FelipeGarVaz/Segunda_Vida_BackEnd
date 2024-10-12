@@ -12,8 +12,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -51,10 +59,10 @@ public class SaleController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Sale.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid sale id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Sale not found", content = @Content) })
-    @GetMapping("{id_sale}")
-    public ResponseEntity<Sale> getByID_Sale(@PathVariable Integer id_sale) {
+    @GetMapping("{idSale}")
+    public ResponseEntity<Sale> getByID_Sale(@PathVariable Integer idSale) {
         try {
-            Sale sale = saleService.getByID_Sale(id_sale);
+            Sale sale = saleService.getByID_Sale(idSale);
             return new ResponseEntity<>(sale, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -65,11 +73,11 @@ public class SaleController {
     @Operation(summary = "Update a sale")
     @ApiResponse(responseCode = "200", description = "Sale updated", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) })
-    @PutMapping("{id_sale}")
-    public ResponseEntity<String> update(@RequestBody Sale sale, @PathVariable Integer id_sale) {
+    @PutMapping("{idSale}")
+    public ResponseEntity<String> update(@RequestBody Sale sale, @PathVariable Integer idSale) {
         try {
-            Sale auxSale = saleService.getByID_Sale(id_sale);
-            sale.setId_sale(auxSale.getId_sale());
+            Sale auxSale = saleService.getByID_Sale(idSale);
+            sale.setIdSale(auxSale.getIdSale());
             saleService.save(sale);
             return new ResponseEntity<>("Updated record", HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -77,11 +85,10 @@ public class SaleController {
         }
     }
 
-    // Eliminar una venta
     @Operation(summary = "Delete a sale")
     @ApiResponse(responseCode = "204", description = "Sale deleted")
-    @DeleteMapping("{id_sale}")
-    public void delete(@PathVariable Integer id_sale) {
-        saleService.delete(id_sale);
+    @DeleteMapping("{idSale}")
+    public void delete(@PathVariable Integer idSale) {
+        saleService.delete(idSale);
     }
 }
