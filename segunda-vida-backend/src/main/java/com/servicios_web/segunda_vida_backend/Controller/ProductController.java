@@ -60,7 +60,7 @@ public class ProductController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid product id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Product not found", content = @Content) })
-    @GetMapping("{}")
+    @GetMapping("{idProduct}")
     public ResponseEntity<Product> getByID_Product(@PathVariable Integer idProduct) {
         try {
             Product product = productService.getByID_Product(idProduct);
