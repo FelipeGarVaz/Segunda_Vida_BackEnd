@@ -79,4 +79,35 @@ VALUES
 ('David Torres', 'davidtorres', 'torresClave102', '555-9876', 'david.torres@example.com', TRUE);
 select * from usuarios;
 
+INSERT INTO Categorias (nombre_categoria)
+VALUES
+('Electrónica'),
+('Ropa'),
+('Hogar');
+
+INSERT INTO Productos (id_usuario, nombre_articulo, precio, id_categoria, descripcion, condicion)
+VALUES
+(1, 'Smartphone Samsung Galaxy', 599.99, 1, 'Smartphone con 128GB de almacenamiento y cámara de 12MP.', 'Nuevo'),
+(2, 'Camisa de Algodón', 29.99, 2, 'Camisa de manga larga, color azul.', 'Usado'),
+(3, 'Juego de Sábanas', 49.99, 3, 'Juego de sábanas de 4 piezas, tamaño Queen.', 'Nuevo');
+
+INSERT INTO Compras (id_comprador, id_producto)
+VALUES
+(2, 1),
+(3, 2),
+(1, 3);
+
+INSERT INTO Ventas (id_vendedor, id_producto)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
+INSERT INTO Resenas (id_compra, comentario, puntuacion)
+VALUES
+(1, 'Excelente producto, funciona perfectamente.', 5),
+(2, 'La camisa tiene algunos signos de uso, pero está bien.', 3),
+(3, 'Las sábanas son de buena calidad y suaves.', 4);
+
+
 
