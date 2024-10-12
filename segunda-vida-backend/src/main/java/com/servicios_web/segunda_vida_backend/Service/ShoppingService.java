@@ -24,12 +24,12 @@ public class ShoppingService {
         shoppingRepo.save(shopping);
     }
 
-    public Shopping getByID_Shopping(Integer id_shopping){
-        return shoppingRepo.findById(id_shopping).get();
+    public Shopping getByIdShopping(Integer idShopping){
+        return shoppingRepo.findById(idShopping).get();
     }
 
-    public void delete(Integer id_shopping){
-        shoppingRepo.deleteById(id_shopping);
+    public void delete(Integer idShopping){
+        shoppingRepo.deleteById(idShopping);
     }
 }
 

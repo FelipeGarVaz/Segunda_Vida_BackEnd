@@ -22,54 +22,54 @@ public class Shopping {
 
     @Column(name = "id_compra")
     @JsonProperty("id_compra")
-    private int id_shopping;
+    private int idShopping;
 
     @NotNull(message = "Buyer ID cannot be null")
     @Column(name = "id_comprador")
     @JsonProperty("id_comprador")
-    private int id_buyer;
+    private int idBuyer;
 
     @NotNull(message = "Product ID cannot be null")
     @Column(name = "id_producto")
     @JsonProperty("id_producto")
-    private int id_product;
+    private int idProduct;
 
     @NotNull
     @CreationTimestamp
     @Column(name = "fecha_compra", nullable = false, updatable = false)
     @JsonProperty("fecha_compra")
-    private LocalDateTime date_of_purchase;
+    private LocalDateTime dateOfPurchase;
 
       //GET AND SET
-    public int getId_shopping() {
-        return id_shopping;
+    public int getIdShopping() {
+        return idShopping;
     }
 
-    public void setId_shopping(int id_shopping) {
-        this.id_shopping = id_shopping;
+    public void setIdShopping(int idShopping) {
+        this.idShopping = idShopping;
     }
 
-    public int getId_buyer() {
-        return id_buyer;
+    public int getIdBuyer() {
+        return idBuyer;
     }
 
-    public void setId_buyer(int id_buyer) {
-        this.id_buyer = id_buyer;
+    public void setIdBuyer(int idBuyer) {
+        this.idBuyer = idBuyer;
     }
 
-    public int getId_product() {
-        return id_product;
+    public int getIdProduct() {
+        return idProduct;
     }
 
-    public void setId_product(int id_product) {
-        this.id_product = id_product;
+    public void setIdProduct(int idProduct) {
+        this.idProduct = idProduct;
     }
 
-    public LocalDateTime get_Date_of_purchase() {
-        return date_of_purchase;
+    public LocalDateTime getDateOfPurchase() {
+        return dateOfPurchase;
     }
 
-    public void set__Date_of_purchase(LocalDateTime date_of_purchase) {
-        this.date_of_purchase = date_of_purchase;
+    public void setDateOfPurchase(LocalDateTime dateOfPurchase) {
+        this.dateOfPurchase = dateOfPurchase;
     }
 }
