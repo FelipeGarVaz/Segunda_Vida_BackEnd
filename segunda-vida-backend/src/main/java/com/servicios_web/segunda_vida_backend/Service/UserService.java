@@ -14,12 +14,10 @@ import java.util.List;
 @Transactional
 public class UserService {
     @Autowired
-    private UserRepository userRepo;
-    @Autowired
     private UserRepository userRepository;
 
     public List<User> getAll() {
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 
     public List<User> getAll(int page, int pageSize) {
@@ -29,13 +27,13 @@ public class UserService {
     }
 
     public void save (User user) {
-        userRepo.save(user);
+        userRepository.save(user);
     }
 
     public User getByID_User(Integer idUser){
-        return userRepo.findById(idUser).get();
+        return userRepository.findById(idUser).get();
     }
     public void delete(Integer idUser){
-        userRepo.deleteById(idUser);
+        userRepository.deleteById(idUser);
     }
 }
