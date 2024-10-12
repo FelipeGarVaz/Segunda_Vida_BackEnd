@@ -60,10 +60,10 @@ public class ProductController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid product id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Product not found", content = @Content) })
-    @GetMapping("{}")
+    @GetMapping("{idProduct}")
     public ResponseEntity<Product> getByID_Product(@PathVariable Integer idProduct) {
         try {
-            Product product = productService.getByID_Product(idProduct);
+            Product product = productService.getByIDProduct(idProduct);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -77,8 +77,8 @@ public class ProductController {
     @PutMapping("{idProduct}")
     public ResponseEntity<String> update(@RequestBody Product product, @PathVariable Integer idProduct) {
         try {
-            Product auxProduct = productService.getByID_Product(idProduct);
-            product.setId_product(auxProduct.getId_product());
+            Product auxProduct = productService.getByIDProduct(idProduct);
+            product.setIdProduct(auxProduct.getIdProduct());
             productService.save(product);
             return new ResponseEntity<>("Updated record", HttpStatus.OK);
         } catch (NoSuchElementException e) {

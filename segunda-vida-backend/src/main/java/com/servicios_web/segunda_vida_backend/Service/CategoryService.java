@@ -12,25 +12,25 @@ import java.util.List;
 @Transactional
 public class CategoryService {
     @Autowired
-    private CategoryRepository categoryRepo;
+    private CategoryRepository categoryRepository;
 
     //Listar todas las categorias
     public List<Category> getAll() {
-        return categoryRepo.findAll();
+        return categoryRepository.findAll();
     }
 
     //Guardar una categoria
     public void save (Category category) {
-        categoryRepo.save(category);
+        categoryRepository.save(category);
     }
 
     //Obtener una categoria por su id
-    public Category getByID_Category(Integer idCategory) {
-        return categoryRepo.findById(idCategory).get();
+    public Category getByIDCategory(Integer idCategory) {
+        return categoryRepository.findById(idCategory).get();
     }
 
     //Eliminar una categoria por su id
     public void delete(Integer idCategory) {
-        categoryRepo.deleteById(idCategory);
+        categoryRepository.deleteById(idCategory);
     }
 }
