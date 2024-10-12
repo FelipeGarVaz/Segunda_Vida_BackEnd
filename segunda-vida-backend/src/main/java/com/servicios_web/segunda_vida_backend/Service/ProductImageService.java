@@ -13,25 +13,25 @@ import java.util.List;
 public class ProductImageService {
 
     @Autowired
-    private ProductImageRepository productImageRepo;
+    private ProductImageRepository productImageRepository;
 
     // Obtener todas las imágenes de producto
     public List<ProductImage> getAll() {
-        return productImageRepo.findAll();
+        return productImageRepository.findAll();
     }
 
     // Guardar una nueva imagen de producto
     public void save(ProductImage productImage) {
-        productImageRepo.save(productImage);
+        productImageRepository.save(productImage);
     }
 
     // Obtener una imagen de producto por su ID
-    public ProductImage getByIdImage(Integer idImagen) {
-        return productImageRepo.findById(idImagen).orElse(null);
+    public ProductImage getByIdImage(Integer idImage) {
+        return productImageRepository.findById(idImage).orElse(null);
     }
 
     // Eliminar una imagen de producto por su ID
-    public void delete(Integer idImagen) {
-        productImageRepo.deleteById(idImagen);
+    public void delete(Integer idImage) {
+        productImageRepository.deleteById(idImage);
     }
 }

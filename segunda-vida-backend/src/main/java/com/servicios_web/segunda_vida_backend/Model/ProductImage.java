@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ImagenesProducto")
@@ -16,10 +17,13 @@ public class ProductImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idImagen;
+
+    @NotNull
+    @Column(name = "id_imagen")
+    private int idImage;
 
     @Column(name = "url_imagen")
-    private String urlImagen;
+    private String urlImage;
 
     //Creamos la relación con la tabla Product
     @ManyToOne
@@ -27,19 +31,19 @@ public class ProductImage {
     private Product producto;
 
     //GET AND SET
-    public int getId_Imagen() {
-        return idImagen;
+    public int getIdImage() {
+        return idImage;
     }
 
-    public void setId_Imagen(int idImagen) {
-        this.idImagen = idImagen;
+    public void setIdImage(int idImage) {
+        this.idImage = idImage;
     }
 
-    public String getUrl_Imagen() {
-        return urlImagen;
+    public String getUrlImage() {
+        return urlImage;
     }
 
-    public void setUrl_Imagen(String urlImagen) {
-        this.urlImagen = urlImagen;
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }

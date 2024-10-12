@@ -60,9 +60,9 @@ public class CategoryController {
             @ApiResponse(responseCode = "400", description = "Invalid category id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Category not found", content = @Content) })
     @GetMapping("{idCategory}")
-    public ResponseEntity<Category> getByID_Category(@PathVariable Integer idCategory) {
+    public ResponseEntity<Category> getByIDCategory(@PathVariable Integer idCategory) {
         try {
-            Category category = categoryService.getByID_Category(idCategory);
+            Category category = categoryService.getByIDCategory(idCategory);
             return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -76,8 +76,8 @@ public class CategoryController {
     @PutMapping("{idCategory}")
     public ResponseEntity<String> update(@RequestBody Category category, @PathVariable Integer idCategory) {
         try {
-            Category auxCategory = categoryService.getByID_Category(idCategory);
-            category.setId_category(auxCategory.getId_category());
+            Category auxCategory = categoryService.getByIDCategory(idCategory);
+            category.setIdCategory(auxCategory.getIdCategory());
             categoryService.save(category);
             return new ResponseEntity<>("Updated record", HttpStatus.OK);
         } catch (NoSuchElementException e) {

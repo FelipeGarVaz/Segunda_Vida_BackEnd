@@ -12,21 +12,21 @@ import java.util.List;
 @Transactional
 public class ProductService {
     @Autowired
-    private ProductRepository productRepo;
+    private ProductRepository productRepository;
 
     public List<Product> getAll() {
-        return productRepo.findAll();
+        return productRepository.findAll();
     }
 
     public void save (Product product) {
-        productRepo.save(product);
+        productRepository.save(product);
     }
 
-    public Product getByID_Product(Integer idProduct){
-        return productRepo.findById(idProduct).get();
+    public Product getByIDProduct(Integer idProduct){
+        return productRepository.findById(idProduct).get();
     }
 
     public void delete(Integer idProduct){
-        productRepo.deleteById(idProduct);
+        productRepository.deleteById(idProduct);
     }
 }

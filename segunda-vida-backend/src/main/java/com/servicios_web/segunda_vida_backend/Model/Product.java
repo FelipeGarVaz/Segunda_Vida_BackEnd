@@ -73,20 +73,20 @@ public class Product {
     }
 
     //GET AND SET
-    public int getId_product() {
+    public int getIdProduct() {
         return idProduct;
     }
 
-    public void setId_product(int id_product) {
-        this.idProduct = id_product;
+    public void setIdProduct(int idProduct) {
+        this.idProduct = idProduct;
     }
 
-    public int getId_user() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setId_user(int id_user) {
-        this.idUser = id_user;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -105,12 +105,12 @@ public class Product {
         this.price = price;
     }
 
-    public int getId_categorie() {
+    public int getIdCategorie() {
         return idCategorie;
     }
 
-    public void setId_categorie(int id_categorie) {
-        this.idCategorie = id_categorie;
+    public void setIdCategorie(int idCategorie) {
+        this.idCategorie = idCategorie;
     }
 
     public String getDescription() {

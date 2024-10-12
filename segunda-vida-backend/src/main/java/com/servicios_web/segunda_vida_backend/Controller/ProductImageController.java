@@ -41,8 +41,8 @@ public class ProductImageController {
 
     // Endpoint para obtener una imagen de producto por su ID
     @GetMapping("{idImagen}")
-    public ProductImage getByIdImage(@PathVariable Integer idImagen) {
-        return productImageService.getByIdImage(idImagen);
+    public ProductImage getByIdImage(@PathVariable Integer idImage) {
+        return productImageService.getByIdImage(idImage);
     }
 
     // Endpoint para actualizar una imagen de producto
@@ -50,7 +50,7 @@ public class ProductImageController {
     public ResponseEntity<?> updateProductImage(@RequestBody ProductImage productImage, @PathVariable Integer idImagen) {
         try {
             ProductImage auxProductImage = productImageService.getByIdImage(idImagen);
-            productImage.setId_Imagen(auxProductImage.getId_Imagen());
+            productImage.setIdImage(auxProductImage.getIdImage());
             productImageService.save(productImage);
             return ResponseEntity.ok().body("Updated record");
         } catch (Exception e) {
@@ -59,8 +59,8 @@ public class ProductImageController {
     }
 
     // Endpoint para eliminar una imagen de producto
-    @DeleteMapping("{idImagen}")
-    public void deleteProductImage(@PathVariable Integer idImagen) {
-        productImageService.delete(idImagen);
+    @DeleteMapping("{idImage}")
+    public void deleteProductImage(@PathVariable Integer idImage) {
+        productImageService.delete(idImage);
     }
 }
