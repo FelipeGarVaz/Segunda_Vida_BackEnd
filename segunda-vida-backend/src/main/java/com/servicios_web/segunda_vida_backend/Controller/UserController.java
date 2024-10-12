@@ -12,8 +12,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -44,9 +52,9 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content)
     })
-    @GetMapping("{id_user}")
-    public ResponseEntity<User> getByID_Usuario(@PathVariable Integer id_user) {
-        User user = userService.getByID_User(id_user);
+    @GetMapping("{idUser}")
+    public ResponseEntity<User> getByID_Usuario(@PathVariable Integer idUser) {
+        User user = userService.getByID_User(idUser);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
@@ -68,14 +76,14 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "400", description = "Invalid input provided", content = @Content)
     })
-    @PutMapping("{id_user}")
+    @PutMapping("{idUser}")
     public ResponseEntity<?> update(@Parameter(description = "User object containing the updated details", required = true)
                                         @RequestBody User user,
                                     @Parameter(description = "ID of the user to be updated", required = true)
-                                        @PathVariable Integer id_user) {
+                                        @PathVariable Integer idUser) {
         try {
-            User auxUser = userService.getByID_User(id_user);
-            user.setId_user(auxUser.getId_user());
+            User auxUser = userService.getByID_User(idUser);
+            user.setIdUser(auxUser.getIdUser());
             userService.save(user);
             return new ResponseEntity<String>("Updated record", HttpStatus.OK);
         }catch (NoSuchElementException e) {
@@ -88,10 +96,10 @@ public class UserController {
             @ApiResponse(responseCode = "204", description = "User deleted successfully", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @DeleteMapping("{id_user}")
+    @DeleteMapping("{idUser}")
     public void delete(@Parameter(description = "ID of the user to be deleted", required = true)
-                           @PathVariable Integer id_user) {
-        userService.delete(id_user);
+                           @PathVariable Integer idUser) {
+        userService.delete(idUser);
     }
 
     
