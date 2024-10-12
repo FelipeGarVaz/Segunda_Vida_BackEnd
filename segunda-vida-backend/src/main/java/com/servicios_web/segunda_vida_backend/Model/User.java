@@ -15,7 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id_usuario")
-    private int id_user;
+    private int idUser;
 
     @NotBlank(message = "Name cannot be null or empty and must contain at least one non-whitespace character.")
     @Size(min = 1, max = 255, message = "Name must be between 1 and 255 characters.")
@@ -47,12 +47,12 @@ public class User {
     @JsonProperty("correo_electronico")
     private String email;
 
-    public int getId_user() {
-        return id_user;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -94,5 +94,18 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "idUser=" + idUser +
+                ", name='" + name + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
+
 
