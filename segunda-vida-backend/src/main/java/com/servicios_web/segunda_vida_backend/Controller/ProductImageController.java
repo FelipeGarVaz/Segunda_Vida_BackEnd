@@ -4,7 +4,17 @@ import com.servicios_web.segunda_vida_backend.Model.ProductImage;
 import com.servicios_web.segunda_vida_backend.Service.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -30,16 +40,16 @@ public class ProductImageController {
     }
 
     // Endpoint para obtener una imagen de producto por su ID
-    @GetMapping("{id_image}")
-    public ProductImage getByIdImage(@PathVariable Integer id_image) {
-        return productImageService.getByIdImage(id_image);
+    @GetMapping("{idImagen}")
+    public ProductImage getByIdImage(@PathVariable Integer idImagen) {
+        return productImageService.getByIdImage(idImagen);
     }
 
     // Endpoint para actualizar una imagen de producto
-    @PutMapping("{id_image}")
-    public ResponseEntity<?> updateProductImage(@RequestBody ProductImage productImage, @PathVariable Integer id_image) {
+    @PutMapping("{idImagen}")
+    public ResponseEntity<?> updateProductImage(@RequestBody ProductImage productImage, @PathVariable Integer idImagen) {
         try {
-            ProductImage auxProductImage = productImageService.getByIdImage(id_image);
+            ProductImage auxProductImage = productImageService.getByIdImage(idImagen);
             productImage.setId_Imagen(auxProductImage.getId_Imagen());
             productImageService.save(productImage);
             return ResponseEntity.ok().body("Updated record");
@@ -49,8 +59,8 @@ public class ProductImageController {
     }
 
     // Endpoint para eliminar una imagen de producto
-    @DeleteMapping("{id_image}")
-    public void deleteProductImage(@PathVariable Integer id_image) {
-        productImageService.delete(id_image);
+    @DeleteMapping("{idImagen}")
+    public void deleteProductImage(@PathVariable Integer idImagen) {
+        productImageService.delete(idImagen);
     }
 }

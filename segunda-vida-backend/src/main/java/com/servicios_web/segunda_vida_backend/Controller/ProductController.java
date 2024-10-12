@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import com.servicios_web.segunda_vida_backend.Model.Product;
 import com.servicios_web.segunda_vida_backend.Service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +15,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("product")
@@ -51,10 +60,10 @@ public class ProductController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid product id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Product not found", content = @Content) })
-    @GetMapping("{id_product}")
-    public ResponseEntity<Product> getByID_Product(@PathVariable Integer id_product) {
+    @GetMapping("{}")
+    public ResponseEntity<Product> getByID_Product(@PathVariable Integer idProduct) {
         try {
-            Product product = productService.getByID_Product(id_product);
+            Product product = productService.getByID_Product(idProduct);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -65,10 +74,10 @@ public class ProductController {
     @Operation(summary = "Update a product")
     @ApiResponse(responseCode = "200", description = "Product updated", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Product.class))) })
-    @PutMapping("{id_product}")
-    public ResponseEntity<String> update(@RequestBody Product product, @PathVariable Integer id_product) {
+    @PutMapping("{idProduct}")
+    public ResponseEntity<String> update(@RequestBody Product product, @PathVariable Integer idProduct) {
         try {
-            Product auxProduct = productService.getByID_Product(id_product);
+            Product auxProduct = productService.getByID_Product(idProduct);
             product.setId_product(auxProduct.getId_product());
             productService.save(product);
             return new ResponseEntity<>("Updated record", HttpStatus.OK);
@@ -80,8 +89,7 @@ public class ProductController {
     // Eliminar producto
     @Operation(summary = "Delete a product")
     @ApiResponse(responseCode = "204", description = "Product deleted")
-    @DeleteMapping("{id_product}")
-    public void delete(@PathVariable Integer id_product) {
-        productService.delete(id_product);
+    @DeleteMapping("{idProduct}")
+    public void delete(@PathVariable Integer idProduct) {productService.delete(idProduct);
     }
 }

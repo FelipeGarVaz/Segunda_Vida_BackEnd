@@ -26,12 +26,12 @@ public class ProductImageService {
     }
 
     // Obtener una imagen de producto por su ID
-    public ProductImage getByIdImage(Integer idImage) {
-        return productImageRepo.findById(idImage).orElse(null);
+    public ProductImage getByIdImage(Integer idImagen) {
+        return productImageRepo.findById(idImagen).orElse(null);
     }
 
     // Eliminar una imagen de producto por su ID
-    public void delete(Integer idImage) {
-        productImageRepo.deleteById(idImage);
+    public void delete(Integer idImagen) {
+        productImageRepo.deleteById(idImagen);
     }
 }
