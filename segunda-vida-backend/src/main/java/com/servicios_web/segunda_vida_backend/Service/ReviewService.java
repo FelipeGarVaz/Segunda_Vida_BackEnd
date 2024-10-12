@@ -21,11 +21,11 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    public Review getByID_Review(Integer id_review){
-        return reviewRepository.findById(id_review).get();
+    public Review getByIdReview(Integer idReview){
+        return reviewRepository.findById(idReview).get();
     }
 
-    public void delete(Integer id_review){
-        reviewRepository.deleteById(id_review);
+    public void delete(Integer idReview){
+        reviewRepository.deleteById(idReview);
     }
 }

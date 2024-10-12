@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-@RequestMapping("review")
+@RequestMapping("reviews")
 @CrossOrigin(origins = "http://localhost:3000", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 @Tag(name = "Review", description = "Methods and documentation for reviews")
 public class ReviewController {
@@ -61,9 +61,9 @@ public class ReviewController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid review id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Review not found", content = @Content) })
-    @GetMapping("{id_review}")
-    public ResponseEntity<Review> getByID_Review(@PathVariable Integer id_review) {
-        Review review = reviewService.getByID_Review(id_review);
+    @GetMapping("{idReview}")
+    public ResponseEntity<Review> getByIdReview(@PathVariable Integer idReview) {
+        Review review = reviewService.getByIdReview(idReview);
         return new ResponseEntity<Review>(review, HttpStatus.OK);
     }
 
@@ -71,11 +71,11 @@ public class ReviewController {
     @Operation(summary = "Update a review")
     @ApiResponse(responseCode = "200", description = "Review updated", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Review.class))) })
-    @PutMapping("{id_review}")
-    public ResponseEntity<?> update(@RequestBody Review review, @PathVariable Integer id_review) {
+    @PutMapping("{idReview}")
+    public ResponseEntity<?> update(@RequestBody Review review, @PathVariable Integer idReview) {
         try {
-            Review auxReview = reviewService.getByID_Review(id_review);
-            review.setId_review(auxReview.getId_review());
+            Review auxReview = reviewService.getByIdReview(idReview);
+            review.setIdReview(auxReview.getIdReview());
             reviewService.save(review);
             return new ResponseEntity<String>("Updated record", HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -86,8 +86,8 @@ public class ReviewController {
     // Eliminar una reseña
     @Operation(summary = "Delete a review")
     @ApiResponse(responseCode = "204", description = "Review deleted")
-    @DeleteMapping("{id_review}")
-    public void delete(@PathVariable Integer id_review) {
-        reviewService.delete(id_review);
+    @DeleteMapping("{idReview}")
+    public void delete(@PathVariable Integer idReview) {
+        reviewService.delete(idReview);
     }
 }

@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-@RequestMapping("shopping")
+@RequestMapping("shoppings")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 @Tag(name = "Shopping", description = "methods and documentation of purchases")
 public class ShoppingController {
@@ -61,9 +61,9 @@ public class ShoppingController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Shopping.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid shopping  id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Shopping not found", content = @Content) })
-    @GetMapping("{id_shopping}")
-    public ResponseEntity<Shopping> getByID_Shopping(@PathVariable Integer id_shopping) {
-        Shopping shopping = shoppingService.getByID_Shopping(id_shopping);
+    @GetMapping("{idShopping}")
+    public ResponseEntity<Shopping> getByID_Shopping(@PathVariable Integer idShopping) {
+        Shopping shopping = shoppingService.getByIdShopping(idShopping);
         return new ResponseEntity<Shopping>(shopping, HttpStatus.OK);
     }
 
@@ -71,11 +71,11 @@ public class ShoppingController {
     @Operation(summary = "Update a shopping")
     @ApiResponse(responseCode = "200", description = "Updated shopping", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Shopping.class))) })
-    @PutMapping("{id_shopping}")
-    public ResponseEntity<?> update(@RequestBody Shopping shopping, @PathVariable Integer id_shopping) {
+    @PutMapping("{idShopping}")
+    public ResponseEntity<?> update(@RequestBody Shopping shopping, @PathVariable Integer idShopping) {
         try {
-            Shopping auxShopping = shoppingService.getByID_Shopping(id_shopping);
-            shopping.setId_shopping(auxShopping.getId_shopping());
+            Shopping auxShopping = shoppingService.getByIdShopping(idShopping);
+            shopping.setIdShopping(auxShopping.getIdShopping());
             shoppingService.save(shopping);
             return new ResponseEntity<String>("Updated record", HttpStatus.OK);
         }catch (NoSuchElementException e) {
@@ -84,8 +84,8 @@ public class ShoppingController {
     }
 
     //Eliminar venta
-    @DeleteMapping("{id_shopping}")
-    public void delete(@PathVariable Integer id_shopping) {
-        shoppingService.delete(id_shopping);
+    @DeleteMapping("{idShopping}")
+    public void delete(@PathVariable Integer idShopping) {
+        shoppingService.delete(idShopping);
     }
 }

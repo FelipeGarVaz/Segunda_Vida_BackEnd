@@ -26,11 +26,11 @@ public class Review {
 
     @NotNull
     @Column(name = "id_resena")
-    private int id_review;
+    private int idReview;
 
     @NotNull
     @Column(name = "id_compra")
-    private int id_shopping;
+    private int idShopping;
 
     @NotBlank(message = "Date of purchase cannot be blank")    
     @Size(min = 1, message = "The comment must have at least 1 character")
@@ -45,23 +45,23 @@ public class Review {
     @NotNull
     @CreationTimestamp
     @Column(name = "fecha_resena", nullable = false, updatable = false)
-    private LocalDateTime review_date;
+    private LocalDateTime reviewDate;
 
     //GET AND SET
-    public int getId_review() {
-        return id_review;
+    public int getIdReview() {
+        return idReview;
     }
 
-    public void setId_review(int id_review) {
-        this.id_review = id_review;
+    public void setIdReview(int id_review) {
+        this.idReview = idReview;
     }
 
-    public int getId_shopping() {
-        return id_shopping;
+    public int getIdShopping() {
+        return idShopping;
     }
 
-    public void setId_shopping(int id_shopping) {
-        this.id_shopping = id_shopping;
+    public void setIdShopping(int idShopping) {
+        this.idShopping = idShopping;
     }
 
     public String getCommentary() {
@@ -80,11 +80,11 @@ public class Review {
         this.score = score;
     }
 
-    public LocalDateTime getReview_date() {
-        return review_date;
+    public LocalDateTime getReviewDate() {
+        return reviewDate;
     }
 
-    public void setReview_date(LocalDateTime review_date) {
-        this.review_date = review_date;
+    public void setReviewDate(LocalDateTime reviewDate) {
+        this.reviewDate = reviewDate;
     }
 }
