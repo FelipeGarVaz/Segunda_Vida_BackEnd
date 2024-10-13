@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import com.servicios_web.segunda_vida_backend.Model.Shopping;
 import com.servicios_web.segunda_vida_backend.Repository.ShoppingRepository;
 
@@ -15,6 +16,12 @@ import jakarta.transaction.Transactional;
 public class ShoppingService {
     @Autowired
     private ShoppingRepository shoppingRepo;
+
+    public List<Shopping> getAll(int page, int pageSize) {
+        PageRequest pageReq = PageRequest.of(page, pageSize);
+        Page<Shopping> fabrics = shoppingRepo.findAll(pageReq);
+        return fabrics.getContent();
+    }
 
     public List<Shopping> getAll() {
         return shoppingRepo.findAll();
