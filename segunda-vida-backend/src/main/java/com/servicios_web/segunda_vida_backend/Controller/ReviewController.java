@@ -55,7 +55,7 @@ public class ReviewController {
     }
 
     // Buscar reseña por ID
-    @Operation(summary = "Get a review by its id")
+    @Operation(summary = "Get a review by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Review found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class)) }),
@@ -89,5 +89,20 @@ public class ReviewController {
     @DeleteMapping("{idReview}")
     public void delete(@PathVariable Integer idReview) {
         reviewService.delete(idReview);
+    }
+
+    //Obtener todas las reseñas realizadas por un usuario específico
+    @Operation(summary = "Get all reviews by user ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found reviews for the user", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Review.class))) }),
+            @ApiResponse(responseCode = "404", description = "User not found or no reviews made", content = @Content) })
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Review>> getReviewsByUserId(@PathVariable Integer userId) {
+        List<Review> reviews = reviewService.getReviewsByUserId(userId);
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 }

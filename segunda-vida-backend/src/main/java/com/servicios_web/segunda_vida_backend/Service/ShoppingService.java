@@ -31,5 +31,9 @@ public class ShoppingService {
     public void delete(Integer idShopping){
         shoppingRepo.deleteById(idShopping);
     }
+
+    public List<Shopping> findAllByBuyerId(int userId) {
+        return shoppingRepo.findAllByBuyerIdJPQL(userId);
+    }
 }
 

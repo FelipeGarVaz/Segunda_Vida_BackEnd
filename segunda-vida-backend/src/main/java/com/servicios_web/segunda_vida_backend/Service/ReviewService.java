@@ -28,4 +28,8 @@ public class ReviewService {
     public void delete(Integer idReview){
         reviewRepository.deleteById(idReview);
     }
+
+    public List<Review> getReviewsByUserId(Integer userId) {
+        return reviewRepository.findAllByUserIdJPQL(userId);
+    }
 }
