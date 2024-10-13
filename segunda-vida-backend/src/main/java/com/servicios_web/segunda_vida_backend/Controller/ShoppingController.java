@@ -55,7 +55,7 @@ public class ShoppingController {
     }
 
     //Buscar pod ID
-    @Operation(summary = "Get a fabric type by its id")
+    @Operation(summary = "Get a shopping by its id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Shopping  found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Shopping.class)) }),
@@ -84,8 +84,21 @@ public class ShoppingController {
     }
 
     //Eliminar venta
+    @Operation(summary = "Delete a shopping")
+    @ApiResponse(responseCode = "204", description = "Deleted shopping", content = @Content)
     @DeleteMapping("{idShopping}")
     public void delete(@PathVariable Integer idShopping) {
         shoppingService.delete(idShopping);
+    }
+
+    //Encontrar todas las compras realizadas por un usuario específico
+    @Operation(summary = "Get all shoppings by user ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found shoppings for the user", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Shopping.class))) }),
+            @ApiResponse(responseCode = "404", description = "User not found or no purchases made", content = @Content) })
+    @GetMapping("/user/{userId}")
+    public List<Shopping> findAllByBuyerId(@PathVariable Integer userId) {
+        return shoppingService.findAllByBuyerId(userId);
     }
 }
