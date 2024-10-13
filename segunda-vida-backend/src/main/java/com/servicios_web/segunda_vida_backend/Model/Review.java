@@ -1,11 +1,6 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -46,6 +41,10 @@ public class Review {
     @CreationTimestamp
     @Column(name = "fecha_resena", nullable = false, updatable = false)
     private LocalDateTime reviewDate;
+
+    @ManyToOne
+    @JoinColumn(name = "id_compra", insertable = false, updatable = false)
+    private Shopping shopping;
 
     //GET AND SET
     public int getIdReview() {
