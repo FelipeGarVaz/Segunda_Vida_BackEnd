@@ -1,10 +1,14 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -46,6 +50,14 @@ public class User {
     @Column(name = "correo_electronico")
     @JsonProperty("correo_electronico")
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Shopping> purchases = new ArrayList<>();
 
     public int getIdUser() {
         return idUser;

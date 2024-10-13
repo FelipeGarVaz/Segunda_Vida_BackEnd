@@ -1,21 +1,15 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.concurrent.locks.Condition;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "productos")
@@ -52,6 +46,10 @@ public class Product {
     @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
     private Category categoria;
 
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
+    private User user;
+
     @NotBlank(message = "Description cannot be null or empty and must contain at least one non-whitespace character.")
     @Size(min = 1, max = 500, message = "Description must be between 1 and 500 characters.")
     @Column(name = "descripcion")
@@ -64,6 +62,10 @@ public class Product {
     @Column(name = "condicion")
     @JsonProperty("condicion")
     private Condition condition;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Shopping> purchases = new ArrayList<>();
 
     // Enum para la columna condicion
     public enum Condition {
