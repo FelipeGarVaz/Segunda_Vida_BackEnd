@@ -32,6 +32,15 @@ public class Sale {
     @JsonProperty("fecha_venta")
     private LocalDateTime saleDate;
 
+    @ManyToOne
+    @JoinColumn(name = "id_vendedor", insertable = false, updatable = false)
+    private User seller;
+
+    @OneToOne
+    @JoinColumn(name = "id_producto", insertable = false, updatable = false)
+    private Product product;
+
+
     public int getIdSale() {
         return idSale;
     }

@@ -1,6 +1,7 @@
 package com.servicios_web.segunda_vida_backend.Controller;
 
 import com.servicios_web.segunda_vida_backend.Model.Sale;
+import com.servicios_web.segunda_vida_backend.Model.Shopping;
 import com.servicios_web.segunda_vida_backend.Service.SaleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -90,5 +91,16 @@ public class SaleController {
     @DeleteMapping("{idSale}")
     public void delete(@PathVariable Integer idSale) {
         saleService.delete(idSale);
+    }
+
+    //Encontrar todas las compras realizadas por un usuario específico
+    @Operation(summary = "Get all sales by user ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found sales for the user", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) }),
+            @ApiResponse(responseCode = "404", description = "User not found or no purchases made", content = @Content) })
+    @GetMapping("/user/{userId}")
+    public List<Sale> findAllBySellerId(@PathVariable Integer userId) {
+        return saleService.findAllBySellerId(userId);
     }
 }

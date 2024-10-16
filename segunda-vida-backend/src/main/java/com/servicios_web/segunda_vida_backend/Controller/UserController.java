@@ -102,5 +102,10 @@ public class UserController {
         userService.delete(idUser);
     }
 
-    
+    // Endpoint para obtener un usuario por su nombre de usuario
+    @GetMapping("/username/{userName}")
+    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) {
+        User user = userService.getUserByUserName(userName);
+        return ResponseEntity.ok(user);
+    }
 }
