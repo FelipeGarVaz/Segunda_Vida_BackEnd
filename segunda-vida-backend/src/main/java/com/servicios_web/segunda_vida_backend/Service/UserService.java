@@ -1,5 +1,6 @@
 package com.servicios_web.segunda_vida_backend.Service;
 
+import com.servicios_web.segunda_vida_backend.Exceptions.UsernameNotFoundException;
 import com.servicios_web.segunda_vida_backend.Model.User;
 import com.servicios_web.segunda_vida_backend.Repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,5 +37,18 @@ public class UserService {
     }
     public void delete(Integer idUser){
         userRepository.deleteById(idUser);
+    }
+
+    public User getUserByUserName(String userName) {
+        // Eliminar espacios en blanco alrededor del nombre de usuario
+        userName = userName.trim();
+        // Buscar usuario en la base de datos
+        Optional<User> userOptional = userRepository.findByUserNameJPQL(userName);
+        // Verificar si el usuario fue encontrado
+        if (userOptional.isPresent()) {
+            return userOptional.get(); // Retornar el usuario encontrado
+        } else {
+            throw new UsernameNotFoundException("User not found with username: " + userName);
+        }
     }
 }

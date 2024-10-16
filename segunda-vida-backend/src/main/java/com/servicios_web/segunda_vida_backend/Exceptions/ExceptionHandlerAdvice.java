@@ -23,4 +23,11 @@ public class ExceptionHandlerAdvice {
         //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested item is not registered");
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    // Manejador para UsernameNotFoundException
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
 }
