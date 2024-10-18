@@ -108,4 +108,19 @@ public class UserController {
         User user = userService.getUserByUserName(userName);
         return ResponseEntity.ok(user);
     }
+
+    // Endpoint para obtener un usuario por su correo electrónico
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        User user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user);
+    }
+
+    // Endpoint para obtener un usuario por su nombre completo
+    @GetMapping("/name/{name}")
+    public ResponseEntity<User> getUserByName(@PathVariable String name) {
+        User user = userService.getUserByName(name);
+        return ResponseEntity.ok(user);
+    }
 }
+

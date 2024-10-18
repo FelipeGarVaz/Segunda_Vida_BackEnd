@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -37,7 +40,24 @@ public class SaleService {
     public void delete(Integer id_sale){
         saleRepo.deleteById(id_sale);
     }
+
+    // Encontrar todas las ventas realizadas por un usuario específico
     public List<Sale> findAllBySellerId(int userId) {
         return saleRepo.findAllBySellerIdJPQL(userId);
+    }
+
+    // Encontrar una venta realizada por fecha en formato ejemplo (2024-12-31)
+    public List<Sale> findByDate(LocalDate date) {
+        return saleRepo.findByDateJPQL(date);
+    }
+
+    // Encontrar una venta realizada por fecha en formato ejemplo (2024-12-31T12:07:30)
+    public List<Sale> findByDateComplete(LocalDateTime date) {
+        return saleRepo.findByDateCompleteJPQL(date);
+    }
+
+    // Encontrar una venta por un producto específico
+    public List<Sale> findByProduct(int productId) {
+        return saleRepo.findByProductJPQL(productId);
     }
 }

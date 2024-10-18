@@ -40,7 +40,7 @@ public class UserService {
     }
 
     public User getUserByUserName(String userName) {
-        // Eliminar espacios en blanco alrededor del nombre de usuario
+        // Eliminar espacios en blanco al inicio y al final del nombre de usuario
         userName = userName.trim();
         // Buscar usuario en la base de datos
         Optional<User> userOptional = userRepository.findByUserNameJPQL(userName);
@@ -49,6 +49,30 @@ public class UserService {
             return userOptional.get(); // Retornar el usuario encontrado
         } else {
             throw new UsernameNotFoundException("User not found with username: " + userName);
+        }
+    }
+
+    public User getUserByEmail(String email) {
+        // Eliminar espacios en blanco alrededor del correo electrónico
+        email = email.trim();
+        // Buscar usuario en la base de datos
+        Optional<User> userOptional = userRepository.findByEmailJPQL(email);
+        // Verificar si el usuario fue encontrado
+        if (userOptional.isPresent()) {
+            return userOptional.get(); // Retornar el usuario encontrado
+        } else {
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+    }
+
+    public User getUserByName(String name) {
+        // Buscar usuario en la base de datos
+        Optional<User> userOptional = userRepository.findByNameJPQL(name);
+        // Verificar si el usuario fue encontrado
+        if (userOptional.isPresent()) {
+            return userOptional.get(); // Retornar el usuario encontrado
+        } else {
+            throw new UsernameNotFoundException("User not found with name: " + name);
         }
     }
 }
