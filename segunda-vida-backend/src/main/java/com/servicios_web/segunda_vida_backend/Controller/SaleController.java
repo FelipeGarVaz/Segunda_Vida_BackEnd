@@ -1,7 +1,5 @@
 package com.servicios_web.segunda_vida_backend.Controller;
-
 import com.servicios_web.segunda_vida_backend.Model.Sale;
-import com.servicios_web.segunda_vida_backend.Model.Shopping;
 import com.servicios_web.segunda_vida_backend.Service.SaleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -11,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -50,8 +52,13 @@ public class SaleController {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) })
     @PostMapping
     public void createSale(@RequestBody Sale sale) {
+        // Asigna la fecha actual si saleDate es nulo
+        if (sale.getSaleDate() == null) {
+            sale.setSaleDate(LocalDateTime.now());
+        }
         saleService.save(sale);
     }
+
 
     // Buscar venta por ID
     @Operation(summary = "Get a sale by its id")
@@ -102,5 +109,38 @@ public class SaleController {
     @GetMapping("/user/{userId}")
     public List<Sale> findAllBySellerId(@PathVariable Integer userId) {
         return saleService.findAllBySellerId(userId);
+    }
+
+    //Encontrar una venta realizada por fecha en formato ejemplo (2024-12-31)
+    @Operation(summary = "Get a sale by date")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found sales for the date", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) }),
+            @ApiResponse(responseCode = "404", description = "No sales found for the date", content = @Content) })
+    @GetMapping("/date/{date}")
+    public List<Sale> findByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return saleService.findByDate(date);
+    }
+
+    //Encontrar una venta realizada por fecha en formato ejemplo (2024-12-31T12:07:30)
+    @Operation(summary = "Get a sale by date")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found sales for the date", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) }),
+            @ApiResponse(responseCode = "404", description = "No sales found for the date", content = @Content) })
+    @GetMapping("/datecomplete/{date}")
+    public List<Sale> findByDateComplete(@PathVariable LocalDateTime date) {
+        return saleService.findByDateComplete(date);
+    }
+
+    //Encontrar una venta por un producto específico
+    @Operation(summary = "Get a sale by product ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found sales for the product", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) }),
+            @ApiResponse(responseCode = "404", description = "No sales found for the product", content = @Content) })
+    @GetMapping("/product/{productId}")
+    public List<Sale> findByProduct(@PathVariable Integer productId) {
+        return saleService.findByProduct(productId);
     }
 }

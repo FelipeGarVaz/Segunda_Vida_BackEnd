@@ -26,8 +26,7 @@ public class Sale {
     @JsonProperty("id_producto")
     private int idProduct;
 
-    @NotNull
-    @CreationTimestamp
+    @NotNull(message = "Sale date cannot be null")
     @Column(name = "fecha_venta", nullable = false, updatable = false)
     @JsonProperty("fecha_venta")
     private LocalDateTime saleDate;
