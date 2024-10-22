@@ -70,7 +70,7 @@ public class SaleController {
     @GetMapping("{idSale}")
     public ResponseEntity<Sale> getByID_Sale(@PathVariable Integer idSale) {
         try {
-            Sale sale = saleService.getByID_Sale(idSale);
+            Sale sale = saleService.getByIdSale(idSale);
             return new ResponseEntity<>(sale, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -84,7 +84,7 @@ public class SaleController {
     @PutMapping("{idSale}")
     public ResponseEntity<String> update(@RequestBody Sale sale, @PathVariable Integer idSale) {
         try {
-            Sale auxSale = saleService.getByID_Sale(idSale);
+            Sale auxSale = saleService.getByIdSale(idSale);
             sale.setIdSale(auxSale.getIdSale());
             saleService.save(sale);
             return new ResponseEntity<>("Updated record", HttpStatus.OK);

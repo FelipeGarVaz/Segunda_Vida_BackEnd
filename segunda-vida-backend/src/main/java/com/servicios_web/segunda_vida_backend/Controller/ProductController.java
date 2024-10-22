@@ -3,6 +3,8 @@ package com.servicios_web.segunda_vida_backend.Controller;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import com.servicios_web.segunda_vida_backend.Repository.ProductImageRepository;
+import com.servicios_web.segunda_vida_backend.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +51,8 @@ public class ProductController {
     @ApiResponse(responseCode = "201", description = "Product registered", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Product.class))) })
     @PostMapping
-    public void createProduct(@RequestBody Product product) {
+    public void save(Product product) {
+        product.setStatus(Product.ProductStatus.Disponible);
         productService.save(product);
     }
 

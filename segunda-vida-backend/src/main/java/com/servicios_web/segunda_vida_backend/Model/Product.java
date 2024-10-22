@@ -32,7 +32,8 @@ public class Product {
     @JsonProperty("nombre_articulo")
     private String name;
 
-    @NotBlank(message = "Price cannot be null or empty and must contain at least one non-whitespace character.")
+    //@NotBlank(message = "Price cannot be null or empty and must contain at least one non-whitespace character.")
+    @NotNull
     @Column(name = "precio")
     @JsonProperty("precio")
     private double price;
@@ -43,10 +44,12 @@ public class Product {
     private int idCategorie;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
     private Category categoria;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
     private User user;
 
@@ -56,12 +59,18 @@ public class Product {
     @JsonProperty("descripcion")
     private String description;
 
-    @NotBlank(message = "Condition cannot be null or empty and must contain at least one non-whitespace character.")
+    //@NotBlank(message = "Condition cannot be null or empty and must contain at least one non-whitespace character.")
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "condicion")
     @JsonProperty("condicion")
     private Condition condition;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    @Column(name = "estado")
+    @JsonProperty("estado")
+    private ProductStatus status = ProductStatus.Disponible;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -72,6 +81,11 @@ public class Product {
         Nuevo,
         Usado,
         Dañado
+    }
+
+    public enum ProductStatus {
+        Disponible,
+        Vendido,
     }
 
     //GET AND SET
@@ -139,4 +153,19 @@ public class Product {
         this.user = user;
     }
 
+    public Category getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Category categoria) {
+        this.categoria = categoria;
+    }
+
+    public ProductStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProductStatus status) {
+        this.status = status;
+    }
 }
