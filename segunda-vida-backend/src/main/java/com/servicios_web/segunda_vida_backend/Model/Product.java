@@ -130,4 +130,13 @@ public class Product {
     public void setCondition(Condition condition) {
         this.condition = condition;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

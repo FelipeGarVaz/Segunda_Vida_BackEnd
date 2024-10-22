@@ -1,6 +1,7 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
@@ -40,10 +41,12 @@ public class Shopping {
     private LocalDateTime dateOfPurchase;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_comprador", insertable = false, updatable = false)
     private User buyer;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_producto", insertable = false, updatable = false)
     private Product product;
 
@@ -83,4 +86,10 @@ public class Shopping {
     public void setDateOfPurchase(LocalDateTime dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+
 }

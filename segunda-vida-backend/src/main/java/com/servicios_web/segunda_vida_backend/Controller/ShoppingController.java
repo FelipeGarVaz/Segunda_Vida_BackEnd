@@ -1,5 +1,6 @@
 package com.servicios_web.segunda_vida_backend.Controller;
 
+import com.servicios_web.segunda_vida_backend.Model.ContactInfo;
 import com.servicios_web.segunda_vida_backend.Model.Shopping;
 import com.servicios_web.segunda_vida_backend.Service.ShoppingService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +36,7 @@ public class ShoppingController {
 
     @Autowired
     private ShoppingService shoppingService;
-    
+
     //devuelve una lista de compras
     @Operation(summary = "Get all shoppings")
     @ApiResponse(responseCode = "200", description = "Found shoppings", content = {
@@ -105,8 +106,20 @@ public class ShoppingController {
             @ApiResponse(responseCode = "200", description = "Found shoppings for the user", content = {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Shopping.class))) }),
             @ApiResponse(responseCode = "404", description = "User not found or no purchases made", content = @Content) })
-    @GetMapping("/user/{userId}")
-    public List<Shopping> findAllByBuyerId(@PathVariable Integer userId) {
-        return shoppingService.findAllByBuyerId(userId);
+    @GetMapping("/user/{idUser}")
+    public List<Shopping> findAllByBuyerId(@PathVariable Integer idUser) {
+        return shoppingService.findAllByBuyerId(idUser);
+    }
+
+    @Operation(summary = "Get contact information for the seller of a shopping item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Contact information found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ContactInfo.class)) }),
+            @ApiResponse(responseCode = "404", description = "Shopping not found or contact information unavailable", content = @Content)
+    })
+    @GetMapping("/{idShopping}/contact-info")
+    public ResponseEntity<ContactInfo> getUserContactInfo(@PathVariable int idShopping) {
+        ContactInfo contactInfo = shoppingService.getUserContactInfo(idShopping);
+        return ResponseEntity.ok(contactInfo);
     }
 }
