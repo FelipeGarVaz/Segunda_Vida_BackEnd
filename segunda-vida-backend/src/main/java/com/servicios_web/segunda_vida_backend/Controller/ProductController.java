@@ -3,8 +3,6 @@ package com.servicios_web.segunda_vida_backend.Controller;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.servicios_web.segunda_vida_backend.Repository.ProductImageRepository;
-import com.servicios_web.segunda_vida_backend.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,13 +36,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    // Obtener todos los productos
-    @Operation(summary = "Get all products")
-    @ApiResponse(responseCode = "200", description = "Found products", content = {
-            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Product.class))) })
-    @GetMapping
-    public List<Product> getAll() {
-        return productService.getAll();
+    // Paginacion
+    @Operation(summary = "Get all products with pagination")
+    @GetMapping(value = "pagination", params = { "page", "pageSize" })
+    public List<Product> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                         @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        List<Product> products = productService.getAll(page, pageSize);
+        return products;
     }
 
     // Crear un nuevo producto
@@ -51,8 +50,7 @@ public class ProductController {
     @ApiResponse(responseCode = "201", description = "Product registered", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Product.class))) })
     @PostMapping
-    public void save(Product product) {
-        product.setStatus(Product.ProductStatus.Disponible);
+    public void createProduct(@RequestBody Product product) {
         productService.save(product);
     }
 
@@ -94,5 +92,41 @@ public class ProductController {
     @ApiResponse(responseCode = "204", description = "Product deleted")
     @DeleteMapping("{idProduct}")
     public void delete(@PathVariable Integer idProduct) {productService.delete(idProduct);
+    }
+
+    //metodo encontrar por nombre
+    @Operation(summary = "Get a product by its name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid product name supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = @Content) })
+    @GetMapping("name/{name}")
+    public List<Product> findByName(@PathVariable String name) {
+        return productService.findByName(name);
+    }
+
+    //metodo encontrar por precio
+    @Operation(summary = "Get a product by its price")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid product price supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = @Content) })
+    @GetMapping("price/{price}")
+    public List<Product> findByPrice(@PathVariable Double price) {
+        return productService.findByPrice(price);
+    }
+
+    //metodo encontrar por palabra clave
+    @Operation(summary = "Get a product by its keyword")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid keyword supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = @Content) })
+    @GetMapping("keyword/{keyword}")
+    public List<Product> findByKeyword(@PathVariable String keyword) {
+        return productService.findByKeyword(keyword);
     }
 }
