@@ -1,5 +1,6 @@
 package com.servicios_web.segunda_vida_backend.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,10 @@ public class Review {
     @Column(name = "id_compra")
     private int idShopping;
 
+    @NotNull
+    @Column(name = "id_vendedor")
+    private int idSeller;
+
     @NotBlank(message = "Date of purchase cannot be blank")    
     @Size(min = 1, message = "The comment must have at least 1 character")
     @Column(name = "comentario")
@@ -43,6 +48,7 @@ public class Review {
     private LocalDateTime reviewDate;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_compra", insertable = false, updatable = false)
     private Shopping shopping;
 
@@ -85,5 +91,21 @@ public class Review {
 
     public void setReviewDate(LocalDateTime reviewDate) {
         this.reviewDate = reviewDate;
+    }
+
+    public int getIdSeller() {
+        return idSeller;
+    }
+
+    public void setIdSeller(int idSeller) {
+        this.idSeller = idSeller;
+    }
+
+    public Shopping getShopping() {
+        return shopping;
+    }
+
+    public void setShopping(Shopping shopping) {
+        this.shopping = shopping;
     }
 }

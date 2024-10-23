@@ -1,6 +1,7 @@
 package com.servicios_web.segunda_vida_backend.Controller;
 
 import com.servicios_web.segunda_vida_backend.Model.Review;
+import com.servicios_web.segunda_vida_backend.Model.ReviewRequest;
 import com.servicios_web.segunda_vida_backend.Service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -57,10 +58,16 @@ public class ReviewController {
     // Crear una nueva reseña
     @Operation(summary = "Register a review")
     @ApiResponse(responseCode = "201", description = "Review registered", content = {
-            @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Review.class))) })
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class)) })
     @PostMapping
-    public void createReview(@RequestBody Review review) {
-        reviewService.save(review);
+    public ResponseEntity<Review> createReview(@RequestBody ReviewRequest reviewRequest) {
+        try {
+            // Crear la reseña con el servicio
+            Review review = reviewService.createReview(reviewRequest.getIdShopping(), reviewRequest.getCommentary(), reviewRequest.getScore());
+            return new ResponseEntity<>(review, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Manejo del error si la compra no se encuentra
+        }
     }
 
     // Buscar reseña por ID
