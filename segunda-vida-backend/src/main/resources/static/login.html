@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Register</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<h2>Login</h2>
+<form id="loginForm" action="/auth/login" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit">Login</button>
+</form>
+
+<h2>Register</h2>
+<form id="registerForm" action="/auth/register" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="userName">Username:</label>
+    <input type="text" id="usernameR" name="usernameR" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="regPassword" name="password" required>
+    <br>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <button type="submit">Register</button>
+</form>
+
+<script>
+    // Comportamiento para el envío del formulario de login
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    // Redirigir a la página de Swagger UI
+                    window.location.href = '/doc/swagger-ui/index.html#/';
+                } else {
+                    alert('Login failed');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    // Comportamiento para el envío del formulario de registro
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const username = document.getElementById('usernameR').value;
+        const password = document.getElementById('regPassword').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+
+        fetch('/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, username, password, phone, email })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    alert('Registration successful');
+                    // Redirigir a la página de Swagger UI o hacer otra acción
+                    window.location.href = '/doc/swagger-ui/index.html#/';
+                } else {
+                    alert('Registration failed');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>
+
