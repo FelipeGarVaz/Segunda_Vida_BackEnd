@@ -11,9 +11,8 @@ public class Sale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id_venta")
-    @JsonProperty("id_venta")
+    @JsonProperty("idSale")
     private int idSale;
 
     @NotNull(message = "Seller ID cannot be null")
@@ -29,6 +28,7 @@ public class Sale {
     @NotNull(message = "Sale date cannot be null")
     @Column(name = "fecha_venta", nullable = false, updatable = false)
     @JsonProperty("fecha_venta")
+    @CreationTimestamp
     private LocalDateTime saleDate;
 
     @ManyToOne
@@ -38,7 +38,6 @@ public class Sale {
     @OneToOne
     @JoinColumn(name = "id_producto", insertable = false, updatable = false)
     private Product product;
-
 
     public int getIdSale() {
         return idSale;
