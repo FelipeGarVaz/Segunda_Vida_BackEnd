@@ -18,10 +18,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAll() {
+    /*public List<User> getAll() {
         return userRepository.findAll();
-    }
+    }*/
 
+    //paginacion
     public List<User> getAll(int page, int pageSize) {
         PageRequest pageReq = PageRequest.of(page, pageSize);
         Page<User> users = userRepository.findAll(pageReq);

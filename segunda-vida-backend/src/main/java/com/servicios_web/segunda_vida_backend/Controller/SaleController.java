@@ -1,5 +1,6 @@
 package com.servicios_web.segunda_vida_backend.Controller;
 import com.servicios_web.segunda_vida_backend.Model.Sale;
+import com.servicios_web.segunda_vida_backend.Model.Shopping;
 import com.servicios_web.segunda_vida_backend.Service.SaleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -21,8 +22,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,28 +38,37 @@ public class SaleController {
     @Autowired
     private SaleService saleService;
 
+    //paginación
+    @Operation(summary = "Get all sales with pagination")
+    @GetMapping(value = "pagination", params = { "page", "pageSize" })
+    public List<Sale> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                          @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        List<Sale> sales = saleService.getAll(page, pageSize);
+        return sales;
+    }
+
     // Obtener todas las ventas
-    @Operation(summary = "Get all sales")
+   /* @Operation(summary = "Get all sales")
     @ApiResponse(responseCode = "200", description = "Found sales", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) })
     @GetMapping
     public List<Sale> getAll() {
         return saleService.getAll();
-    }
+    }   */
 
     // Crear una nueva venta
     @Operation(summary = "Register a sale")
     @ApiResponse(responseCode = "201", description = "Sale registered", content = {
             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Sale.class))) })
     @PostMapping
-    public void createSale(@RequestBody Sale sale) {
+    public ResponseEntity<Sale> createSale(@RequestBody Sale sale) {
         // Asigna la fecha actual si saleDate es nulo
         if (sale.getSaleDate() == null) {
             sale.setSaleDate(LocalDateTime.now());
         }
         saleService.save(sale);
+        return new ResponseEntity<>(sale, HttpStatus.CREATED);
     }
-
 
     // Buscar venta por ID
     @Operation(summary = "Get a sale by its id")
@@ -69,10 +79,10 @@ public class SaleController {
             @ApiResponse(responseCode = "404", description = "Sale not found", content = @Content) })
     @GetMapping("{idSale}")
     public ResponseEntity<Sale> getByID_Sale(@PathVariable Integer idSale) {
-        try {
-            Sale sale = saleService.getByIdSale(idSale);
+        Sale sale = saleService.getByID_Sale(idSale);
+        if (sale != null) {
             return new ResponseEntity<>(sale, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -84,8 +94,10 @@ public class SaleController {
     @PutMapping("{idSale}")
     public ResponseEntity<String> update(@RequestBody Sale sale, @PathVariable Integer idSale) {
         try {
-            Sale auxSale = saleService.getByIdSale(idSale);
+            Sale auxSale = saleService.getByID_Sale(idSale);
             sale.setIdSale(auxSale.getIdSale());
+            // Reuse the existing sale date to prevent it from being updated
+            sale.setSaleDate(auxSale.getSaleDate());
             saleService.save(sale);
             return new ResponseEntity<>("Updated record", HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -96,8 +108,13 @@ public class SaleController {
     @Operation(summary = "Delete a sale")
     @ApiResponse(responseCode = "204", description = "Sale deleted")
     @DeleteMapping("{idSale}")
-    public void delete(@PathVariable Integer idSale) {
-        saleService.delete(idSale);
+    public ResponseEntity<Void> delete(@PathVariable Integer idSale) {
+        try {
+            saleService.delete(idSale);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     //Encontrar todas las compras realizadas por un usuario específico
@@ -133,7 +150,7 @@ public class SaleController {
         return saleService.findByDateComplete(date);
     }
 
-    //Encontrar una venta por un producto específico
+    //Encontrar una venta por un producto específico (Id)
     @Operation(summary = "Get a sale by product ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found sales for the product", content = {

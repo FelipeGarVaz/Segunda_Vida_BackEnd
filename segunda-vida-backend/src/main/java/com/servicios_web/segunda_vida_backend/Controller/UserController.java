@@ -1,4 +1,5 @@
 package com.servicios_web.segunda_vida_backend.Controller;
+import com.servicios_web.segunda_vida_backend.Model.Sale;
 import com.servicios_web.segunda_vida_backend.Model.User;
 import com.servicios_web.segunda_vida_backend.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,13 +36,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Operation(summary = "Get all users")
+    //paginación
+    @Operation(summary = "Get all users with pagination")
+    @GetMapping(value = "pagination", params = { "page", "pageSize" })
+    public List<User> getAllPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                      @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        List<User> users = userService.getAll(page, pageSize);
+        return users;
+    }
+
+    /*@Operation(summary = "Get all users")
     @ApiResponse(responseCode = "200", description = "Found users", content = {
         @Content(mediaType = "application/json",array = @ArraySchema(schema = @Schema(implementation = User.class)))})
     @GetMapping
     public List<User> getAll() {
         return userService.getAll();
-    }
+    }*/
 
     @Operation(summary = "Get user by ID", description = "Retrieve a user by their unique ID")
     @ApiResponses(value = {
@@ -64,10 +75,17 @@ public class UserController {
     @ApiResponse(responseCode = "400", description = "Invalid input provided", content = @Content)
     @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     @PostMapping
-    public void createUser (@Parameter(description = "User object containing the details of the new user", required = true)
-                                @RequestBody  User user) {
+    public ResponseEntity<Void> createUser(@Parameter(description = "User object containing the details of the new user", required = true)
+                                           @RequestBody User user) {
         userService.save(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    /*@PostMapping
+    public void createUser(@Parameter(description = "User object containing the details of the new user", required = true)
+                           @RequestBody User user) {
+        userService.save(user);
+    }*/
+
 
     @Operation(summary = "Update a user")
     @ApiResponses(value = {
@@ -97,10 +115,19 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @DeleteMapping("{idUser}")
+    public ResponseEntity<Void> delete(@PathVariable Integer idUser) {
+        try {
+            userService.delete(idUser);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+        /*
     public void delete(@Parameter(description = "ID of the user to be deleted", required = true)
                            @PathVariable Integer idUser) {
         userService.delete(idUser);
-    }
+    }*/
 
     // Endpoint para obtener un usuario por su nombre de usuario
     @GetMapping("/username/{userName}")
