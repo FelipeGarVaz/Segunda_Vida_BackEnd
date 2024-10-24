@@ -8,8 +8,7 @@ CREATE TABLE Usuarios (
     nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
     contrasena VARCHAR(255) NOT NULL,
     telefono VARCHAR(20),
-    correo_electronico VARCHAR(100) UNIQUE NOT NULL,
-    verificado BOOLEAN DEFAULT FALSE -- Columna para verificar la identidad
+    correo_electronico VARCHAR(100) UNIQUE NOT NULL
 );
 
 -- Tabla de Categorias
@@ -27,6 +26,7 @@ CREATE TABLE Productos (
     id_categoria INT, -- Relación directa con la tabla de categorías
     descripcion TEXT,
     condicion ENUM('Nuevo', 'Usado') NOT NULL, -- Usando ENUM para condicionar el estado del producto
+    estado ENUM('Disponible', 'Vendido') NOT NULL, -- NUEVOOOOOOOOOOOOOOO
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria) ON DELETE CASCADE
 );
@@ -59,25 +59,28 @@ CREATE TABLE Ventas (
     FOREIGN KEY (id_producto) REFERENCES Productos(id_producto) ON DELETE CASCADE
 );
 
+
 -- Tabla de Reseñas (Vinculada a Compras)
 CREATE TABLE Resenas (
     id_resena INT AUTO_INCREMENT PRIMARY KEY,
     id_compra INT, -- Relacionada con la compra realizada
+    id_vendedor INT, -- Vendedor asociado a la reseña NUEVOOOOOOO
     comentario TEXT,
     puntuacion INT CHECK (puntuacion >= 1 AND puntuacion <= 5), -- Validar puntuación entre 1 y 5
     fecha_resena TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_compra) REFERENCES Compras(id_compra) ON DELETE CASCADE
+    FOREIGN KEY (id_compra) REFERENCES Compras(id_compra) ON DELETE CASCADE,
+     FOREIGN KEY (id_vendedor) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE -- Relación con el vendedor NUEVOOOOOO
 );
 
 -- Insertar datos de prueba en la tabla Usuarios
-INSERT INTO Usuarios (nombre_completo, nombre_usuario, contrasena, telefono, correo_electronico, verificado)
+INSERT INTO Usuarios (nombre_completo, nombre_usuario, contrasena, telefono, correo_electronico)
 VALUES
-('Juan Pérez', 'juan123', 'contrasenaSegura123', '555-1234', 'juan.perez@example.com', TRUE),
-('Ana Gómez', 'ana_gomez', 'gomezSegura456', '555-5678', 'ana.gomez@example.com', FALSE),
-('Carlos Ramírez', 'carlos_r', 'ramirezPassword789', '555-7890', 'carlos.ramirez@example.com', TRUE),
-('Lucía Fernández', 'lucy_f', 'fernandezSeguro101', '555-4567', 'lucia.fernandez@example.com', FALSE),
-('David Torres', 'davidtorres', 'torresClave102', '555-9876', 'david.torres@example.com', TRUE);
-select * from usuarios;
+('Juan Pérez', 'juan123', 'contrasenaSegura123', '555-1234', 'juan.perez@example.com'),
+('Ana Gómez', 'ana_gomez', 'gomezSegura456', '555-5678', 'ana.gomez@example.com'),
+('Carlos Ramírez', 'carlos_r', 'ramirezPassword789', '555-7890', 'carlos.ramirez@example.com'),
+('Lucía Fernández', 'lucy_f', 'fernandezSeguro101', '555-4567', 'lucia.fernandez@example.com'),
+('David Torres', 'davidtorres', 'torresClave102', '555-9876', 'david.torres@example.com');
+select * from Usuarios;
 
 INSERT INTO Categorias (nombre_categoria)
 VALUES
@@ -85,29 +88,32 @@ VALUES
 ('Ropa'),
 ('Hogar');
 
-INSERT INTO Productos (id_usuario, nombre_articulo, precio, id_categoria, descripcion, condicion)
-VALUES
-(1, 'Smartphone Samsung Galaxy', 599.99, 1, 'Smartphone con 128GB de almacenamiento y cámara de 12MP.', 'Nuevo'),
-(2, 'Camisa de Algodón', 29.99, 2, 'Camisa de manga larga, color azul.', 'Usado'),
-(3, 'Juego de Sábanas', 49.99, 3, 'Juego de sábanas de 4 piezas, tamaño Queen.', 'Nuevo');
+INSERT INTO Productos (id_usuario, nombre_articulo, precio, id_categoria, descripcion, condicion, estado)
+VALUES 
+(1, 'Laptop HP Pavilion', 750.00, 1, 'Laptop usada en buen estado, 8GB RAM, 256GB SSD', 'Usado', 'Disponible'),
+(2, 'Cámara Canon EOS Rebel T7', 500.00, 1, 'Cámara nueva, incluye lente 18-55mm', 'Nuevo', 'Disponible'),
+(3, 'Silla de oficina ergonómica', 150.00, 3, 'Silla usada con ajuste lumbar, ideal para largas horas de trabajo', 'Usado', 'Disponible');
+select * from Productos;
 
 INSERT INTO Compras (id_comprador, id_producto)
 VALUES
 (2, 1),
 (3, 2),
 (1, 3);
-
+select * from compras;
 INSERT INTO Ventas (id_vendedor, id_producto)
 VALUES
 (1, 1),
 (2, 2),
 (3, 3);
 
-INSERT INTO Resenas (id_compra, comentario, puntuacion)
-VALUES
-(1, 'Excelente producto, funciona perfectamente.', 5),
-(2, 'La camisa tiene algunos signos de uso, pero está bien.', 3),
-(3, 'Las sábanas son de buena calidad y suaves.', 4);
+select * from Ventas;
 
+INSERT INTO Resenas (id_compra, id_vendedor, comentario, puntuacion)
+VALUES (1, 2, 'El producto llegó en buenas condiciones, muy satisfecho con la compra.', 5);
+INSERT INTO Resenas (id_compra, id_vendedor, comentario, puntuacion)
+VALUES (2, 3, 'El vendedor fue amable, pero el envío tardó más de lo esperado.', 3);
+INSERT INTO Resenas (id_compra, id_vendedor, comentario, puntuacion)
+VALUES (3, 4, 'El producto no era como se describía, no fue una buena experiencia.', 2);
 
 

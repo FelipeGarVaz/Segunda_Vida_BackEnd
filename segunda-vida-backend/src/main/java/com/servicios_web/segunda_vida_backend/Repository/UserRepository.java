@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // Encontrar un usuario por su nombre de completo usando JPQL
     @Query("SELECT u FROM User u WHERE u.name = :name")
     Optional<User> findByNameJPQL(@Param("name") String name);
+
+    Optional<User> findByUserName(String userName);
 }
